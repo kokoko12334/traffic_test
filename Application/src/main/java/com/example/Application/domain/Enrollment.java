@@ -7,9 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "enrollment")
 public class Enrollment {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "enrollment_id")
     private int enrollmentId;
 
