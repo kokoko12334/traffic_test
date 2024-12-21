@@ -12,7 +12,7 @@ public class Student {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id")
-    private int studentId;
+    private Long studentId;
 
     @Column(name = "name", length = 50)
     private String name;
@@ -20,4 +20,6 @@ public class Student {
     @Column(name = "email", length = 100)
     private String email;
 
+    public Student() {
+    }
 }
