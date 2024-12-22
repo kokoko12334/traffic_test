@@ -1,5 +1,6 @@
 package com.example.Application.service;
 
+import com.example.Application.domain.Course;
 import com.example.Application.domain.Enrollment;
 import com.example.Application.repository.EnrollmentJpa;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,22 @@ public class EnrollmentService {
     }
 
     public Long apply(Enrollment enrollment) {
-        enrollmentJpa.save(enrollment);
-        return enrollment.getEnrollmentId();
+
+        Course course = enrollment.getCourse();
+        if (course.getCurrentCount() < course.getCapacity()) {
+            enrollmentJpa.save(enrollment);
+            return enrollment.getEnrollmentId();
+        }
+
+        return -1L;
+    }
+
+    public Optional<Enrollment> findOne(Long enrollmentId) {
+        return enrollmentJpa.findById(enrollmentId);
+    }
+
+    public List<Enrollment> findEnrollments() {
+        return enrollmentJpa.findAll();
     }
 
     public Optional<List<Enrollment>> findByCourseId(Long courseId) {
