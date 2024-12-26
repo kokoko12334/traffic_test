@@ -17,7 +17,7 @@ public class Course {
     @Column(name = "title", length = 50)
     private String title;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
