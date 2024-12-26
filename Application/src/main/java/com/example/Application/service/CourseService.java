@@ -30,6 +30,6 @@ public class CourseService {
     }
 
     public List<Course> findCourses() {
-        return courseJpa.findAll();
+        return courseJpa.findAllWithProfessor();
     }
 }
