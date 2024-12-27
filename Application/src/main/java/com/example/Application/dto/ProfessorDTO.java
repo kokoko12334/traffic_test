@@ -4,20 +4,20 @@ import com.example.Application.domain.Professor;
 import lombok.Getter;
 
 @Getter
-public class ProfessorDto {
+public class ProfessorDTO {
     private Long professorId;
     private String name;
     private String department;
 
-    private ProfessorDto(Long professorId, String name, String department) {
+    private ProfessorDTO(Long professorId, String name, String department) {
         this.professorId = professorId;
         this.name = name;
         this.department = department;
 
     }
 
-    public static ProfessorDto fromEntity(Professor professor) {
-        return new ProfessorDto(
+    public static ProfessorDTO fromEntity(Professor professor) {
+        return new ProfessorDTO(
                 professor.getProfessorId(),
                 professor.getName(),
                 professor.getDepartment()
