@@ -15,8 +15,8 @@ public class EnrollmentJpaCustomImpl implements EnrollmentJpaCustom {
     @Override
     public Optional<List<Enrollment>> findByStuentId(Long studentId) {
         return Optional.ofNullable(
-                em.createQuery("SELECT e FROM Enrollment e WHERE e.student_id = :condition", Enrollment.class)
-                        .setParameter("condition", studentId)
+                em.createQuery("SELECT e FROM Enrollment e WHERE e.student.studentId = :studentId", Enrollment.class)
+                        .setParameter("studentId", studentId)
                         .getResultList()
             );
     }
@@ -24,9 +24,22 @@ public class EnrollmentJpaCustomImpl implements EnrollmentJpaCustom {
     @Override
     public Optional<List<Enrollment>> findByCourseId(Long courseId) {
         return Optional.ofNullable(
-                em.createQuery("SELECT e FROM Enrollment e WHERE e.course_id = :condition", Enrollment.class)
-                        .setParameter("condition", courseId)
+                em.createQuery("SELECT e FROM Enrollment e WHERE e.course.courseId = :courseId", Enrollment.class)
+                        .setParameter("courseId", courseId)
                         .getResultList()
         );
+    }
+
+    @Override
+    public Optional<Enrollment> findByUnique(Enrollment enrollment) {
+        List<Enrollment> resultList = em.createQuery("SELECT e FROM Enrollment e WHERE e.student = :student AND e.course = :course", Enrollment.class)
+                .setParameter("student", enrollment.getStudent())
+                .setParameter("course", enrollment.getCourse())
+                .getResultList();
+
+        if (resultList.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(resultList.get(0));
     }
 }

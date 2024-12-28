@@ -1,7 +1,9 @@
 package com.example.Application.dto;
 
 import com.example.Application.domain.Enrollment;
+import lombok.Getter;
 
+@Getter
 public class EnrollmentDTO {
     private final Long enrollmentId;
     private final String courseTitle;
