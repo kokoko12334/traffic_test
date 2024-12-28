@@ -28,4 +28,8 @@ public class Course {
     private int capacity;
 
     public Course() {}
+
+    public void increaseCount() {
+        this.currentCount ++;
+    }
 }
