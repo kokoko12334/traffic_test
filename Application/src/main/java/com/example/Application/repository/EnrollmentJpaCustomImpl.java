@@ -13,9 +13,26 @@ public class EnrollmentJpaCustomImpl implements EnrollmentJpaCustom {
     private EntityManager em;
 
     @Override
+    public Optional<Enrollment> findByEnrollmentId(Long enrollmentId) {
+        return Optional.ofNullable(
+                em.createQuery("SELECT e FROM Enrollment e " +
+                                "JOIN FETCH e.student " +
+                                "JOIN FETCH e.course c " +
+                                "JOIN FETCH c.professor " +
+                                "WHERE e.enrollmentId = :enrollmentId", Enrollment.class)
+                        .setParameter("enrollmentId", enrollmentId)
+                        .getSingleResult()
+        );
+    }
+
+    @Override
     public Optional<List<Enrollment>> findByStuentId(Long studentId) {
         return Optional.ofNullable(
-                em.createQuery("SELECT e FROM Enrollment e WHERE e.student.studentId = :studentId", Enrollment.class)
+                em.createQuery("SELECT e FROM Enrollment e " +
+                                "JOIN FETCH e.student " +
+                                "JOIN FETCH e.course c " +
+                                "JOIN FETCH c.professor " +
+                                "WHERE e.student.studentId = :studentId", Enrollment.class)
                         .setParameter("studentId", studentId)
                         .getResultList()
             );
@@ -24,7 +41,11 @@ public class EnrollmentJpaCustomImpl implements EnrollmentJpaCustom {
     @Override
     public Optional<List<Enrollment>> findByCourseId(Long courseId) {
         return Optional.ofNullable(
-                em.createQuery("SELECT e FROM Enrollment e WHERE e.course.courseId = :courseId", Enrollment.class)
+                em.createQuery("SELECT e FROM Enrollment e " +
+                                "JOIN FETCH e.student " +
+                                "JOIN FETCH e.course c " +
+                                "JOIN FETCH c.professor " +
+                                "WHERE e.course.courseId = :courseId", Enrollment.class)
                         .setParameter("courseId", courseId)
                         .getResultList()
         );

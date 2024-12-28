@@ -41,7 +41,7 @@ public class EnrollmentService {
     }
 
     public Optional<Enrollment> findOne(Long enrollmentId) {
-        return enrollmentJpa.findById(enrollmentId);
+        return enrollmentJpa.findByEnrollmentId(enrollmentId);
     }
 
     public List<Enrollment> findEnrollments() {
