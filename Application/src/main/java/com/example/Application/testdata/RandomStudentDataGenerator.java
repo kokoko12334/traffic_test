@@ -13,7 +13,7 @@ import java.util.List;
 public class RandomStudentDataGenerator {
 
     public static void main(String[] args) {
-        int numberOfStudents = 5000;
+        int numberOfStudents = 3000;
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("university");
         EntityManager em = emf.createEntityManager();

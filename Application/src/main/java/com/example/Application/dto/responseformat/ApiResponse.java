@@ -16,6 +16,11 @@ public class ApiResponse<T> extends ResponseEntity<ResponseFormat<T>> {
         return new ApiResponse<>(response, HttpStatus.OK);
     }
 
+    public static <T> ApiResponse<T> customSuccess(String message, T data) {
+        ResponseFormat<T> response = new ResponseFormat<>(HttpStatus.OK, data, message);
+        return new ApiResponse<>(response, HttpStatus.OK);
+    }
+
     public static <T> ApiResponse<T> notFound(String message) {
         ResponseFormat<T> response = new ResponseFormat<>(HttpStatus.NOT_FOUND, null, message);
         return new ApiResponse<>(response, HttpStatus.NOT_FOUND);

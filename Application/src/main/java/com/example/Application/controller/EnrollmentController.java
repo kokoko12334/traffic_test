@@ -5,7 +5,6 @@ import com.example.Application.dto.EnrollmentDTO;
 import com.example.Application.dto.responseformat.ApiResponse;
 import com.example.Application.service.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,11 +26,11 @@ public class EnrollmentController {
         Long enrollementId = enrollmentService.apply(enrollment);
 
         if (enrollementId == -1) {
-            return ApiResponse.error("이미 등록한 수강신청입니다.", HttpStatus.BAD_REQUEST);
+            return ApiResponse.customSuccess("이미 등록한 수강신청입니다.", -1L);
         }
 
         if (enrollementId == -2) {
-            return ApiResponse.error("수강인원이 모두 찼습니다", HttpStatus.BAD_REQUEST);
+            return ApiResponse.customSuccess("수강인원이 모두 찼습니다", -1L);
         }
 
         return ApiResponse.success(enrollementId);
