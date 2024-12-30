@@ -4,6 +4,7 @@ import com.example.Application.domain.Course;
 import com.example.Application.domain.Enrollment;
 import com.example.Application.domain.Professor;
 import com.example.Application.domain.Student;
+import com.example.Application.repository.CourseJpa;
 import com.example.Application.repository.EnrollmentJpa;
 import com.example.Application.service.EnrollmentService;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,9 @@ public class EnrollmentServiceTest {
 
     @MockitoBean
     private EnrollmentJpa enrollmentJpa;
+
+    @MockitoBean
+    private CourseJpa courseJpa;
 
     private Enrollment createTestCase() {
         Student student = new Student();

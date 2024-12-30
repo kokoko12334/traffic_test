@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+
+  mysql-db:
+    image: mysql:latest
+    restart: always
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 7292
+    ports:
+      - "3306:3306"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 2G
+    networks:
+      - app-network
+
+  springboot-app:
+    restart: always
+    container_name: springboot-app
+    build:
+      context: .
+      dockerfile: ./SpringDockerfile
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 2G
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
