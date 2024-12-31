@@ -3,6 +3,7 @@ package com.example.Application.service;
 import com.example.Application.domain.Student;
 import com.example.Application.repository.StudentJpa;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class StudentService {
         return student.getStudentId();
     }
 
+    @Cacheable(value = "students", key = "#p0")
     public Optional<Student> findOne(Long studentId) {
         return studentJpa.findById(studentId);
     }
