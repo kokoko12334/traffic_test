@@ -1,7 +1,6 @@
 package com.example.Application.service;
 
 import com.example.Application.domain.Enrollment;
-import com.example.Application.repository.CourseJpa;
 import com.example.Application.repository.EnrollmentJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,33 +10,31 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class EnrollmentService {
 
     private final EnrollmentJpa enrollmentJpa;
 
-    private final CourseJpa courseJpa;
+    private final CourseService courseService;
 
     @Autowired
-    public EnrollmentService(EnrollmentJpa enrollmentJpa, CourseJpa courseJpa) {
+    public EnrollmentService(EnrollmentJpa enrollmentJpa, CourseService courseService) {
         this.enrollmentJpa = enrollmentJpa;
-        this.courseJpa = courseJpa;
+        this.courseService = courseService;
     }
 
+    @Transactional
     public Long apply(Enrollment enrollment) {
 
         if (isDuplicate(enrollment)) {
             return -1L; // 1
         }
 
-        return courseJpa.findById(enrollment.getCourse().getCourseId()) // 2
-                .filter(course -> course.getCurrentCount() < course.getCapacity())
-                .map(course -> {
-                    course.increaseCount();
-                    enrollmentJpa.save(enrollment); // 3
-                    return enrollment.getEnrollmentId();
-                })
-                .orElse(-2L);
+        Long result = courseService.updateCourse(enrollment.getCourse().getCourseId());
+        if (result != -2L) {
+            enrollmentJpa.save(enrollment);
+            return enrollment.getEnrollmentId();
+        }
+        return -2L;
     }
 
     public Optional<Enrollment> findOne(Long enrollmentId) {

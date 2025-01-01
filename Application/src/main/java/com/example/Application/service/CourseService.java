@@ -32,4 +32,13 @@ public class CourseService {
     public List<Course> findCourses() {
         return courseJpa.findAllWithProfessor();
     }
+
+    public Long updateCourse(Long courseId) {
+        return courseJpa.findByIdLock(courseId)
+                .filter(course -> course.getCurrentCount() < course.getCapacity())
+                .map(course -> {
+                    course.increaseCount();
+                    return courseId;
+                }).orElse(-2L);
+    }
 }
