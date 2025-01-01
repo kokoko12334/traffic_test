@@ -9,5 +9,5 @@ public interface EnrollmentJpaCustom {
     Optional<Enrollment> findByEnrollmentId(Long enrollmentId);
     Optional<List<Enrollment>> findByStuentId(Long studentId);
     Optional<List<Enrollment>> findByCourseId(Long courseId);
-    Optional<Enrollment> findByUnique(Enrollment enrollment);
+    Optional<Enrollment> findByUnique(Long studentId, Long courseid);
 }

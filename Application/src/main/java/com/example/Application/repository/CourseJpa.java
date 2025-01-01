@@ -1,6 +1,7 @@
 package com.example.Application.repository;
 
 import com.example.Application.domain.Course;
+import io.lettuce.core.dynamic.annotation.Param;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
@@ -16,6 +17,6 @@ public interface CourseJpa extends JpaRepository<Course, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT c FROM Course c WHERE c.courseId = :courseId")
-    Optional<Course> findByIdLock(Long courseId);
+    Optional<Course> findByIdLock(@Param("courseId") Long courseId);
 
 }

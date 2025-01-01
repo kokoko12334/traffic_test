@@ -17,9 +17,9 @@ public class CacheConfig {
 
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-        // Student Id 기반 조회는 30초로 설정
+
         RedisCacheConfiguration redisCacheConfiguration = generateCacheConfiguration()
-                .entryTtl(Duration.ofSeconds(30L));
+                .entryTtl(Duration.ofSeconds(60L));
 
         return RedisCacheManager.RedisCacheManagerBuilder
                 .fromConnectionFactory(redisConnectionFactory)

@@ -52,10 +52,10 @@ public class EnrollmentJpaCustomImpl implements EnrollmentJpaCustom {
     }
 
     @Override
-    public Optional<Enrollment> findByUnique(Enrollment enrollment) {
-        List<Enrollment> resultList = em.createQuery("SELECT e FROM Enrollment e WHERE e.student = :student AND e.course = :course", Enrollment.class)
-                .setParameter("student", enrollment.getStudent())
-                .setParameter("course", enrollment.getCourse())
+    public Optional<Enrollment> findByUnique(Long studentId, Long courseId) {
+        List<Enrollment> resultList = em.createQuery("SELECT e FROM Enrollment e WHERE e.student.studentId = :studentId AND e.course.courseId = :courseId", Enrollment.class)
+                .setParameter("studentId", studentId)
+                .setParameter("courseId", courseId)
                 .getResultList();
 
         if (resultList.isEmpty()) {
