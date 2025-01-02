@@ -3,7 +3,6 @@ package com.example.Application.service;
 import com.example.Application.domain.Enrollment;
 import com.example.Application.repository.EnrollmentJpa;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,26 +14,42 @@ public class EnrollmentService {
 
     private final EnrollmentJpa enrollmentJpa;
     private final CourseService courseService;
-    private final CacheManager cacheManager;
+    private final RedisService redisService;
 
     @Autowired
-    public EnrollmentService(EnrollmentJpa enrollmentJpa, CourseService courseService, CacheManager cacheManager) {
+    public EnrollmentService(EnrollmentJpa enrollmentJpa, CourseService courseService, RedisService redisService) {
         this.enrollmentJpa = enrollmentJpa;
         this.courseService = courseService;
-        this.cacheManager = cacheManager;
+        this.redisService = redisService;
     }
 
     @Transactional
     public Long apply(Enrollment enrollment) {
 
-        if (isDuplicate(enrollment.getStudent().getStudentId(), enrollment.getCourse().getCourseId())) {
+        if (redisService.isDuplicate(enrollment.getStudent().getStudentId(), enrollment.getCourse().getCourseId())) {
             return -1L;
         }
 
         Long result = courseService.updateCourse(enrollment.getCourse().getCourseId());
         if (result != -2) {
             enrollmentJpa.save(enrollment);
+            redisService.updateEnrollment(enrollment);
             return  enrollment.getEnrollmentId();
+        }
+        return -2L;
+    }
+
+    @Transactional
+    public Long applyRedis(Enrollment enrollment) {
+
+        if (redisService.isDuplicate(enrollment.getStudent().getStudentId(), enrollment.getCourse().getCourseId())) {
+            return -1L;
+        }
+
+        boolean result = redisService.updateCourse(enrollment.getCourse().getCourseId());
+        if (result) {
+            redisService.updateEnrollment(enrollment);
+            return 200L;
         }
         return -2L;
     }

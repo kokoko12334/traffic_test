@@ -23,17 +23,17 @@ public class EnrollmentController {
 
     @PostMapping()
     public ApiResponse<Long> create(@RequestBody Enrollment enrollment) {
-        Long enrollementId = enrollmentService.apply(enrollment);
+        Long enrollmentId = enrollmentService.apply(enrollment);
 
-        if (enrollementId == -1) {
+        if (enrollmentId == -1) {
             return ApiResponse.customSuccess("이미 등록한 수강신청입니다.", -1L);
         }
 
-        if (enrollementId == -2) {
+        if (enrollmentId == -2) {
             return ApiResponse.customSuccess("수강인원이 모두 찼습니다", -1L);
         }
 
-        return ApiResponse.success(enrollementId);
+        return ApiResponse.success(enrollmentId);
     }
 
     @GetMapping("/enrollment/{enrollmentId}")
