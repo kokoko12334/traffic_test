@@ -15,12 +15,14 @@ public class EnrollmentService {
     private final EnrollmentJpa enrollmentJpa;
     private final CourseService courseService;
     private final RedisService redisService;
+    private final RedisSetService redisSetService;
 
     @Autowired
-    public EnrollmentService(EnrollmentJpa enrollmentJpa, CourseService courseService, RedisService redisService) {
+    public EnrollmentService(EnrollmentJpa enrollmentJpa, CourseService courseService, RedisService redisService, RedisSetService redisSetService) {
         this.enrollmentJpa = enrollmentJpa;
         this.courseService = courseService;
         this.redisService = redisService;
+        this.redisSetService = redisSetService;
     }
 
     @Transactional
@@ -50,6 +52,17 @@ public class EnrollmentService {
         if (result) {
             redisService.updateEnrollment(enrollment);
             return 200L;
+        }
+        return -2L;
+    }
+
+    @Transactional
+    public Long applyRedisSet(Enrollment enrollment) {
+        Long courseId = enrollment.getCourse().getCourseId();
+        Long studentId = enrollment.getStudent().getStudentId();
+        if (redisSetService.addElementWithLimit(courseId.toString(), studentId)) {
+            enrollmentJpa.save(enrollment);
+            return enrollment.getEnrollmentId();
         }
         return -2L;
     }
