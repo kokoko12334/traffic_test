@@ -23,7 +23,7 @@ public class EnrollmentController {
 
     @PostMapping()
     public ApiResponse<Long> create(@RequestBody Enrollment enrollment) {
-        Long enrollmentId = enrollmentService.applyRedisSet(enrollment);
+        Long enrollmentId = enrollmentService.apply(enrollment);
 
         if (enrollmentId == -1) {
             return ApiResponse.customSuccess("이미 등록한 수강신청입니다.", -1L);

@@ -19,7 +19,7 @@ public class CacheConfig {
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
 
         RedisCacheConfiguration redisCacheConfiguration = generateCacheConfiguration()
-                .entryTtl(Duration.ofSeconds(60L));
+                .entryTtl(Duration.ofSeconds(180L));
 
         return RedisCacheManager.RedisCacheManagerBuilder
                 .fromConnectionFactory(redisConnectionFactory)

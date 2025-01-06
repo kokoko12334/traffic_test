@@ -31,7 +31,12 @@ public class StudentService {
         return studentJpa.findById(studentId);
     }
 
+    public Optional<Student> findOneNoRedis(Long studentId) {
+        return studentJpa.findById(studentId);
+    }
+
     public List<Student> findStudents() {
         return studentJpa.findAll();
+
     }
 }

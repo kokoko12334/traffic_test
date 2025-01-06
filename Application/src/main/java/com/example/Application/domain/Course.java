@@ -27,6 +27,9 @@ public class Course {
     @Column(name = "capacity")
     private int capacity;
 
+    @Version
+    private Long version = 1L;
+
     public Course() {}
 
     public void increaseCount() {
