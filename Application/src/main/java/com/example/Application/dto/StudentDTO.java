@@ -5,12 +5,13 @@ import lombok.Getter;
 
 @Getter
 public class StudentDTO {
-    private final Long id;
+
+    private final Long studentId;
     private final String name;
     private final String email;
 
-    private StudentDTO(Long id, String name, String email) {
-        this.id = id;
+    private StudentDTO(Long studentId, String name, String email) {
+        this.studentId = studentId;
         this.name = name;
         this.email = email;
     }

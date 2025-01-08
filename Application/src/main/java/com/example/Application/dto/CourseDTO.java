@@ -21,7 +21,6 @@ public class CourseDTO {
                 course.getCourseId(),
                 course.getTitle(),
                 course.getProfessor().getName()
-
         );
     }
 }

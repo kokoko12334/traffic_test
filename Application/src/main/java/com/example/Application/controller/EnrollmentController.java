@@ -26,13 +26,8 @@ public class EnrollmentController {
         Long enrollmentId = enrollmentService.apply(enrollment);
 
         if (enrollmentId == -1) {
-            return ApiResponse.customSuccess("이미 등록한 수강신청입니다.", -1L);
+            return ApiResponse.customSuccess("수강 신청 실패", -1L);
         }
-
-        if (enrollmentId == -2) {
-            return ApiResponse.customSuccess("수강인원이 모두 찼습니다", -1L);
-        }
-
         return ApiResponse.success(enrollmentId);
     }
 

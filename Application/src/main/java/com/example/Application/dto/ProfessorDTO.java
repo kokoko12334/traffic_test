@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class ProfessorDTO {
+
     private Long professorId;
     private String name;
     private String department;
