@@ -18,27 +18,19 @@
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+C:.
+├─main
+│  ├─java
+│    └─com
+│        └─example
+│            └─Application
+│                ├─config
+│                ├─controller
+│                ├─domain
+│                ├─dto
+│                │  └─responseformat
+│                ├─repository
+│                ├─service
+│                └─testdata      
+└─test
 
