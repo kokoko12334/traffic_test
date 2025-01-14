@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class CourseService {
 
     private final CourseJpa courseJpa;
@@ -20,6 +19,7 @@ public class CourseService {
         this.courseJpa = courseJpa;
     }
 
+    @Transactional
     public Long register(Course course) {
         courseJpa.save(course);
         return course.getCourseId();
