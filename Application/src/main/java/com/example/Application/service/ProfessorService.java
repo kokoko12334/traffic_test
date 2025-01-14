@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class ProfessorService {
 
     private final ProfessorJpa professorJpa;
@@ -20,6 +19,7 @@ public class ProfessorService {
         this.professorJpa = professorJpa;
     }
 
+    @Transactional
     public Long join(Professor professor) {
         professorJpa.save(professor);
         return professor.getProfessorId();

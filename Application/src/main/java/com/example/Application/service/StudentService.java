@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class StudentService {
 
     private final StudentJpa studentJpa;
@@ -21,6 +20,7 @@ public class StudentService {
         this.studentJpa = studentJpa;
     }
 
+    @Transactional
     public Long join(Student student) {
         studentJpa.save(student);
         return student.getStudentId();

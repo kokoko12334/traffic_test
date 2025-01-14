@@ -20,6 +20,5 @@ public class Student {
     @Column(name = "email", length = 100)
     private String email;
 
-    public Student() {
-    }
+    public Student() {}
 }

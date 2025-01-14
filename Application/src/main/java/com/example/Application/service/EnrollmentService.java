@@ -18,7 +18,6 @@ public class EnrollmentService {
     @Autowired
     public EnrollmentService(EnrollmentJpa enrollmentJpa, RedisSetService redisSetService) {
         this.enrollmentJpa = enrollmentJpa;
-
         this.redisSetService = redisSetService;
     }
 
